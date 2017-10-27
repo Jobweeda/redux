@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 class Title extends PureComponent {
   static PropTypes = {
-    content: PropTypes.String.isrequired,
+    content: PropTypes.string.isRequired,
   }
 
   render(){
