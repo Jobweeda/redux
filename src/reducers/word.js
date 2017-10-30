@@ -1,6 +1,6 @@
 import { NEW_GAME } from '../actions/newGame'
 
-export default (state = null, {type, payload} = {}) => {
+export default (state = 'word', {type, payload} = {}) => {
   switch (type) {
 
   case NEW_GAME :
