@@ -1,15 +1,16 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import Guess from '../actions/guess'
+import Guess from '../actions/guess';
+import PropTypes from 'prop-types'
 
 function showGuess(word, guess) {
-  var wordArray = word.split(" ")
+  var wordArray = word.split("")
   var guesses = wordArray.map(function(letter){
     if (guess.includes(letter) === false) return "_"
     else return letter
   })
-  var addGuess = guesses.join(" ")
-  return addGuess
+  var showGuess = guesses.join(" ")
+  return showGuess
 }
 
 function wrongGuessCount(word, guesses) {
@@ -19,6 +20,10 @@ function wrongGuessCount(word, guesses) {
 }
 
 class Hangman extends PureComponent {
+  static propTypes = {
+    word: PropTypes.string.isrequired,
+    guesses: PropTypes.array,
+  }
 
   isWinner(word, guesses) {
     const guess = this.props.Guess[Guess.length - 1]
@@ -58,11 +63,12 @@ class Hangman extends PureComponent {
         return (
           <div className="game-lost">
           <h2>Oh noez you lost!</h2>
-          <h4> The word you were look for was {currentWord}</h4>
+          <p> The word you were look for was {currentWord}</p>
           </div>
         )
     return (
       <div className='secret-word'>
+          <h2>{ currentGameWord }</h2>
       <div className="guess">
           <form id="guessForm" onSubmit={this.newGuess.bind(this)}>
             <div className="input">
@@ -71,15 +77,16 @@ class Hangman extends PureComponent {
             <input type="submit" value="Guess" />
           </form>
         </div>
-      <h2>{ currentGameWord }</h2>
+         <p>Total guesses: {currentGuess.length}/7</p>
          <p>Guessed letters: { currentGuess.join(" ") }</p>
+
       </div>
 
     )
   }
 }
 
-const mapStateToProps = ({ guess, word }) => ({ guess, word })
+const mapStateToProps = ({ word, guess }) => ({ word, guess })
 const mapDispatchToProps = { Guess }
 
 export default connect (mapStateToProps, mapDispatchToProps)(Hangman)
